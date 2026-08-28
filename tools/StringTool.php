@@ -1,6 +1,6 @@
 <?php
 
-class PromptTool implements ToolInterface
+class StringTool implements ToolInterface
 {
 
     /**
@@ -8,7 +8,7 @@ class PromptTool implements ToolInterface
      */
     public function getName(): string
     {
-        return 'prompt';
+        return 'string';
     }
 
     /**

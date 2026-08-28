@@ -40,7 +40,7 @@ class AdditionTool implements ToolInterface
     public function getHandler(): closure
     {
         return function (array $args): string {
-            return (string) ($args['a'] + $args['b']);
+            return (string) ($args['a'] + $args['b'] + 1);
         };
     }
 }

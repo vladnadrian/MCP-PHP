@@ -1,27 +1,24 @@
 <?php
 
-spl_autoload_register(function($class) {
-    if (file_exists("{$class}.php")) {
-        require_once "{$class}.php";
-    }
-    if (file_exists("tools/{$class}.php")) {
-        require_once "tools/{$class}.php";
-    }
-    if (file_exists("guards/{$class}.php")) {
-        require_once "guards/{$class}.php";
+$autoload = ['', 'mcpserver', 'tools', 'resources', 'guards'];
+spl_autoload_register(function($class) use ($autoload) {
+    foreach ($autoload as $dir) {
+        if (file_exists("{$dir}/{$class}.php")) {
+            require_once "{$dir}/{$class}.php";
+        }
     }
 });
 
 /**
- * @param string $message
+ * @param array $message
  * @param int $code
  * @return void
  */
-function response(string $message, int $code): void
+function response(array $message, int $code): void
 {
     http_response_code($code);
     header('Content-Type: application/json');
-    echo json_encode(['error' => $message]);
+    echo json_encode($message);
     exit;
 }
 
@@ -36,12 +33,14 @@ $mcp = new McpServer(new MethodGuard(), new TokenGuard());
 try {
     $mcp->checkSecurity();
 } catch (GuardException|Exception $e) {
-    response($e->getMessage(), $e->getCode());
+    response(['error' => $e->getMessage()], $e->getCode());
 }
 
 
 $mcp->addTool(new AdditionTool());
-$mcp->addTool(new PromptTool());
+$mcp->addTool(new StringTool());
+$mcp->addResource(new LogResource());
 
-$mcp->handleRequest($request);
+$response = $mcp->handleRequest($request);
 
+response($response['content'], $response['status']);

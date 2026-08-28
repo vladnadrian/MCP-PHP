@@ -9,7 +9,7 @@ class TokenGuard implements GuardInterface
     public function check(): void
     {
         $token = $this->getBearerToken();
-        $expectedToken = 'ABCDEF'; //getenv('MCP_BEARER_TOKEN');
+        $expectedToken = getenv('MCP_BEARER_TOKEN');
 
         if (!$token || !hash_equals($expectedToken, $token)) {
             throw new GuardException('Bad token');
