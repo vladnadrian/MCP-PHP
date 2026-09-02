@@ -1,6 +1,6 @@
 <?php
 
-class ResourcesCapability implements CapabilityInterface
+class ResourcesCapability
 {
     /**
      * @var ResourceInterface[]
@@ -17,18 +17,19 @@ class ResourcesCapability implements CapabilityInterface
     }
 
     /**
-     * @inheritDoc
+     * @return array[]
      */
-    public function list(int $requestId): array
+    public function list(): array
     {
         $list = [];
 
         foreach ($this->resources as $resource) {
             $list[] = [
-                'url' => $resource->getUri(),
+                'uri' => $resource->getUri(),
                 'name' => $resource->getName(),
                 'title' => $resource->getTitle(),
                 'description' => $resource->getDescription(),
+                'mimeType' => $resource->getMimeType(),
             ];
         }
 
@@ -36,9 +37,10 @@ class ResourcesCapability implements CapabilityInterface
     }
 
     /**
-     * @inheritDoc
+     * @param array $params
+     * @return array
      */
-    public function run(int $requestId, array $params): array
+    public function run(array $params): array
     {
         $uri = $params['uri'] ?? '';
 

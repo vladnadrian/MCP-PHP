@@ -3,7 +3,7 @@
 interface GuardInterface
 {
     /**
-     * @throws Exception
+     * @throws GuardException
      */
     public function check(): void;
 }

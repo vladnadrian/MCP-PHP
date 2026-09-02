@@ -71,10 +71,10 @@ class McpServer {
 
         $response = match ($method) {
             'initialize' => $this->handleInitialise(),
-            'tools/list' => $this->tools->list($id),
-            'tools/call' => $this->tools->run($id, $params),
-            'resources/list' => $this->resources->list($id),
-            'resources/read' => $this->resources->run($id, $params),
+            'tools/list' => $this->tools->list(),
+            'tools/call' => $this->tools->run($params),
+            'resources/list' => $this->resources->list(),
+            'resources/read' => $this->resources->run($params),
             'notifications/initialized' => $this->handleInitialiseNotification(),
             default => ["Method not found: {$method}"]
         };

@@ -34,4 +34,12 @@ class LogResource implements ResourceInterface
     {
         return 'Errors log of Apache server';
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getMimeType(): string
+    {
+        return 'text/plain';
+    }
 }

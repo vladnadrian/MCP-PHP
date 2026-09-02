@@ -22,4 +22,8 @@ interface ResourceInterface
      */
     public function getDescription(): string;
 
+    /**
+     * @return string
+     */
+    public function getMimeType(): string;
 }

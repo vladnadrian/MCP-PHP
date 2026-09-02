@@ -1,6 +1,6 @@
 <?php
 
-class ToolsCapability implements CapabilityInterface
+class ToolsCapability
 {
 
     /**
@@ -18,9 +18,9 @@ class ToolsCapability implements CapabilityInterface
     }
 
     /**
-     * @inheritDoc
+     * @return array[]
      */
-    public function list(int $requestId): array
+    public function list(): array
     {
         $list = [];
 
@@ -36,9 +36,10 @@ class ToolsCapability implements CapabilityInterface
     }
 
     /**
-     * @inheritDoc
+     * @param array $params
+     * @return array
      */
-    public function run(int $requestId, array $params): array
+    public function run(array $params): array
     {
         $name = $params['name'] ?? '';
         $args = $params['arguments'] ?? [];
