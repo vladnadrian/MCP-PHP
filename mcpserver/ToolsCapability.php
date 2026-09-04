@@ -39,7 +39,7 @@ class ToolsCapability
      * @param array $params
      * @return array
      */
-    public function run(array $params): array
+    public function call(array $params): array
     {
         $name = $params['name'] ?? '';
         $args = $params['arguments'] ?? [];

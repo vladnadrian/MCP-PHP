@@ -1,6 +1,6 @@
 <?php
 
-$autoload = ['', 'mcpserver', 'tools', 'resources', 'guards'];
+$autoload = ['', 'mcpserver', 'tools', 'resources', 'prompts', 'guards'];
 spl_autoload_register(function($class) use ($autoload) {
     foreach ($autoload as $dir) {
         if (file_exists("{$dir}/{$class}.php")) {
@@ -40,6 +40,7 @@ try {
 $mcp->addTool(new AdditionTool());
 $mcp->addTool(new StringTool());
 $mcp->addResource(new LogResource());
+$mcp->addPrompt(new TestPrompt());
 
 $response = $mcp->handleRequest($request);
 

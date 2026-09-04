@@ -40,7 +40,7 @@ class ResourcesCapability
      * @param array $params
      * @return array
      */
-    public function run(array $params): array
+    public function read(array $params): array
     {
         $uri = $params['uri'] ?? '';
 

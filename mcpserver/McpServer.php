@@ -21,6 +21,11 @@ class McpServer {
     private ResourcesCapability $resources;
 
     /**
+     * @var PromptsCapability
+     */
+    private PromptsCapability $prompts;
+
+    /**
      * @param ...$security
      */
     public function __construct(...$security)
@@ -28,6 +33,7 @@ class McpServer {
         $this->security = $security;
         $this->tools = new ToolsCapability();
         $this->resources = new ResourcesCapability();
+        $this->prompts = new PromptsCapability();
     }
 
     /**
@@ -46,6 +52,15 @@ class McpServer {
     public function addResource(ResourceInterface $resource): void
     {
         $this->resources->add($resource);
+    }
+
+    /**
+     * @param PromptInterface $prompt
+     * @return void
+     */
+    public function addPrompt(PromptInterface $prompt): void
+    {
+        $this->prompts->add($prompt);
     }
 
     /**
@@ -72,9 +87,11 @@ class McpServer {
         $response = match ($method) {
             'initialize' => $this->handleInitialise(),
             'tools/list' => $this->tools->list(),
-            'tools/call' => $this->tools->run($params),
+            'tools/call' => $this->tools->call($params),
             'resources/list' => $this->resources->list(),
-            'resources/read' => $this->resources->run($params),
+            'resources/read' => $this->resources->read($params),
+            'prompts/list' => $this->prompts->list(),
+            'prompts/get' => $this->prompts->get($params),
             'notifications/initialized' => $this->handleInitialiseNotification(),
             default => ["Method not found: {$method}"]
         };
@@ -94,6 +111,9 @@ class McpServer {
                 'resources' => [
                     'listChanged' => true,
                     'subscribe' => true,
+                ],
+                'prompts' => [
+                    'listChanged' => true,
                 ],
             ],
             'serverInfo' => [
